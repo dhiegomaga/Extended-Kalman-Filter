@@ -1,5 +1,8 @@
-# Extended Kalman Filter Project Starter Code
-Self-Driving Car Engineer Nanodegree Program
+# Extended Kalman Filter
+
+![Alt text](imgs/img.jpg "kalman filter")
+
+This repository implements an extended kalman filter used to track a moving object, fusing lidar and radar sensor information. 
 
 In this project you will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower than the tolerance outlined in the project rubric. 
 
