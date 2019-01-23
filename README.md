@@ -35,7 +35,7 @@ Run the simulator.
 
 ## How it works
 
-![Alt text](imgs/kalman.jpg "Kalman Filter")
+![Alt text](imgs/kalman.png "Kalman Filter")
 
 The program simulates a moving car, using the car position groundtruth. Red and blue dots represent (lidar and laser) measurements of the car. The green triangles are the car location estimation given by the kalman filter. 
 
