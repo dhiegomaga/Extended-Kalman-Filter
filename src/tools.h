@@ -3,6 +3,8 @@
 
 #include <vector>
 #include "Eigen/Dense"
+#include <cmath>
+#include <math.h> 
 
 class Tools {
  public:
@@ -26,6 +28,12 @@ class Tools {
    * A helper method to calculate Jacobians.
    */
   Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd& x_state);
+
+  /**
+   * A helper method to transform from cartesian (state space) to polar space (measurement space).
+   */
+  Eigen::VectorXd MeasFuncH(const Eigen::VectorXd& x_state);
+
 
 };
 

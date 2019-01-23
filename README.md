@@ -1,6 +1,6 @@
 # Extended Kalman Filter
 
-![Alt text](imgs/img.jpg "kalman filter")
+![Alt text](imgs/preview.gif "Preview")
 
 This repository implements an extended kalman filter used to track a moving object, fusing lidar and radar sensor information. 
 
@@ -33,27 +33,18 @@ Run the simulator.
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
 
-Tips for setting up your environment can be found in the classroom lesson for this project.
+## How it works
 
-Note that the programs that need to be written to accomplish the project are src/FusionEKF.cpp, src/FusionEKF.h, kalman_filter.cpp, kalman_filter.h, tools.cpp, and tools.h
+![Alt text](imgs/kalman.gif "Kalman Filter")
 
-The program main.cpp has already been filled out, but feel free to modify it.
+The program simulates a moving car, using the car position groundtruth. Red and blue dots represent (lidar and laser) measurements of the car. The green triangles are the car location estimation given by the kalman filter. 
 
-Here is the main protocol that main.cpp uses for uWebSocketIO in communicating with the simulator.
+The simulation data used is inside of "data/obj_pose-laser-radar-synthetic-input.txt". Each row represents one measurement from either Lidar or Radar. Each column represents, in order: (for radar) *sensor_type, rho_measured, phi_measured, rhodot_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth* ; or (for lidar) *sensor_type, x_measured, y_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth* .
 
+In the case of the radar, measurements are in polar form, so converting to state vector space (cartesian space) is a non-linear operation. Thus, an extended kalman filter is used, where the measurement funcion is linearized with Taylor series expansion for a multivariable function, which implies calculating the Jacobian matrix. 
 
-INPUT: values provided by the simulator to the c++ program
+## Code & Classes
 
-["sensor_measurement"] => the measurement that the simulator observed (either lidar or radar)
+**FusionEKF** handles the measurements callbacks from the main program loop. It initializes the filter on the first call, and then operates on a *predit* to *measurement update* cycle on every subsequent call. It also updates the process covariance matrix and the Jacobian matrix of the filter before calling the methods. 
 
-
-OUTPUT: values provided by the c++ program to the simulator
-
-["estimate_x"] <= kalman filter estimated position x
-["estimate_y"] <= kalman filter estimated position y
-["rmse_x"]
-["rmse_y"]
-["rmse_vx"]
-["rmse_vy"]
-
----
+**KalmanFilter** implements the main filter functions, namely: *Predict()*, *Update()* and *UpdateEKF()*. Based on time elapsed and new measurement readings, they guess and update the new most likely position of the object being tracked, using the standard kalman filter equations. For the Extended update case, it projects the object position onto the measurement space using the non-linear equation.
