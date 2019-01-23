@@ -3,6 +3,8 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
+#define PI 3.14159
+
 /* 
  * Please note that the Eigen library does not initialize 
  *   VectorXd or MatrixXd objects with zeros upon creation.
@@ -40,15 +42,22 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd m = tools.MeasFuncH(x_);
   VectorXd y = z - m;
 
-  if(abs(y(1)) > 3.14159)
+  if(abs(y(1)) > PI)
   {
     if(y(1) > 0)
     {
-      y(1) -= 3.14159;
+      while (y(1)> PI)
+      {
+        y(1)-=2.*PI;
+      }
+        
     }
     else
     {
-      y(1) += 3.14159;
+      while (y(1)<-PI)
+      {
+        y(1)+=2.*PI;
+      }
     }
   }
 
