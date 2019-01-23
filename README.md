@@ -37,9 +37,9 @@ Run the simulator.
 
 ![Alt text](imgs/kalman.png "Kalman Filter")
 
-The program simulates a moving car, using the car position groundtruth. Red and blue dots represent (lidar and laser) measurements of the car. The green triangles are the car location estimation given by the kalman filter. 
+The program simulates a moving car, using the car position groundtruth. **Red** and **blue** dots represent (lidar and laser) measurements of the car. The **green triangles** are the car location estimation given by the kalman filter. 
 
-The simulation data used is inside of "data/obj_pose-laser-radar-synthetic-input.txt". Each row represents one measurement from either Lidar or Radar. Each column represents, in order: (for radar) *sensor_type, rho_measured, phi_measured, rhodot_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth* ; or (for lidar) *sensor_type, x_measured, y_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth* .
+The simulation data used is inside of "data/obj_pose-laser-radar-synthetic-input.txt". Each row represents one measurement from either Lidar or Radar. Each column represents, in order: (for radar) `sensor_type, rho_measured, phi_measured, rhodot_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth` ; or (for lidar) `sensor_type, x_measured, y_measured, timestamp, x_groundtruth, y_groundtruth, vx_groundtruth, vy_groundtruth, yaw_groundtruth, yawrate_groundtruth` .
 
 In the case of the radar, measurements are in polar form, so converting to state vector space (cartesian space) is a non-linear operation. Thus, an extended kalman filter is used, where the measurement funcion is linearized with Taylor series expansion for a multivariable function, which implies calculating the Jacobian matrix. 
 
