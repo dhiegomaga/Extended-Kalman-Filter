@@ -1,8 +1,8 @@
 # Extended Kalman Filter
 
-![Alt text](imgs/preview.gif "Preview")
+*This repository implements an extended kalman filter used to track a simulated car, fusing lidar and radar sensor information.*
 
-This repository implements an extended kalman filter used to track a moving object, fusing lidar and radar sensor information. 
+![Alt text](imgs/preview.gif "Preview") 
 
 ## Building
 
@@ -14,10 +14,11 @@ Install dependencies.
 
 ## Run
 
-Download the [simulator](https://github.com/udacity/self-driving-car-sim/releases "Simulator Link Download"). 
+1. Download the [simulator](https://github.com/udacity/self-driving-car-sim/releases "Simulator Link Download"). 
 
-Start: `./ExtendedKF `
-Run the simulator.
+2. Start: `./ExtendedKF `
+
+3. Run the simulator.
 
 ## Dependencies
 
