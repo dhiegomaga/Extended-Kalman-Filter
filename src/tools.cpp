@@ -50,20 +50,18 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   float vx = x_state(2);
   float vy = x_state(3);
 
-  double den = sqrt(px*px+py*py);
-  if(abs(den) < 0.001)
+  float c1 = px*px+py*py;
+  float c2 = sqrt(c1);
+  float c3 = (c1*c2);
+
+  if(fabs(c1) < 0.0001)
   {
-      den = 0.001;
+      c1 = 0.0001;
   }
   
-  Hj(0,0) = px/den;
-  Hj(0,1) = py/den;
-  Hj(1,0) = -py/(den*den);
-  Hj(1,1) = px/(den*den);
-  Hj(2,0) = py*(vx*py - vy*px)/(den*den*den);
-  Hj(2,1) = px*(vy*px - vx*py)/(den*den*den);
-  Hj(2,2) = px/den;
-  Hj(2,3) = py/den;
+  Hj << (px/c2), (py/c2), 0, 0,
+       -(py/c1), (px/c1), 0, 0,
+       py*(vx*py - vy*px)/c3, px*(px*vy - py*vx)/c3, px/c2, py/c2;
 
   return Hj;
 }
@@ -78,12 +76,7 @@ VectorXd Tools::MeasFuncH(const Eigen::VectorXd& x_state)
   double vy = x_state(3);
 
   double c1 = sqrt(px*px + py*py);
-  /*
-  if(c1 < 0.001)
-  {
-    c1 = 0.001f;
-  }
-*/
+
   z(0) = c1;
   z(1) = atan2(py,px);
   z(2) = (px*vx + py*vy)/c1;

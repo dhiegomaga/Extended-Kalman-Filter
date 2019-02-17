@@ -42,23 +42,15 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd m = tools.MeasFuncH(x_);
   VectorXd y = z - m;
 
-  if(abs(y(1)) > PI)
+  // Keeps -PI < rho <= PI
+  while (y(1) > PI)
   {
-    if(y(1) > 0)
-    {
-      while (y(1)> PI)
-      {
-        y(1)-=2.*PI;
-      }
-        
-    }
-    else
-    {
-      while (y(1)<-PI)
-      {
-        y(1)+=2.*PI;
-      }
-    }
+    y(1)-=2.*PI;
+  }
+  
+  while (y(1) <= -PI)
+  {
+    y(1)+=2.*PI;
   }
 
   MatrixXd S = H_ * P_ * H_.transpose() + R_;
